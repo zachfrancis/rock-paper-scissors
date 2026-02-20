@@ -1,2 +1,3 @@
-# rock-paper-scissors
+# Rock Paper Scissors
+
 From The Odin Project

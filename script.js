@@ -57,28 +57,23 @@ function playRound(humanChoice, computerChoice) {
   }
 }
 
-function playGame(rounds = 5) {
-  let humanScore = 0;
-  let computerScore = 0;
+let humanScore = 0;
+let computerScore = 0;
+let result;
 
-  for (let i = 0; i < rounds; i++) {
-    const humanChoice = getHumanChoice();
+const buttons = document.querySelectorAll(".choice");
+for (const button of buttons) {
+  button.addEventListener("click", (event) => {
+    const humanChoice = button.id;
+    console.log(`Choice is ${humanChoice}`);
     const computerChoice = getComputerChoice();
-
     result = playRound(humanChoice, computerChoice);
+
     if (result === "W") {
       humanScore++;
     } else if (result === "L") {
       computerScore++;
     }
     console.log(`Human: ${humanScore} - Computer: ${computerScore}`);
-  }
-
-  if (humanScore > computerScore) {
-    console.log("Congratulations! You are the winner!");
-  } else if (computerScore > humanScore) {
-    console.log("Better luck next time, the computer won.");
-  } else {
-    console.log("No winners, it's a tie.");
-  }
+  });
 }

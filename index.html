@@ -8,8 +8,21 @@
     <script src="./script.js" defer></script>
   </head>
   <body>
-    <button class="choice" id="rock">Rock</button>
-    <button class="choice" id="paper">Paper</button>
-    <button class="choice" id="scissors">Scissors</button>
+    <div class="container">
+      <div class="score">
+        <h2 class="player">Human</h2>
+        <p id="human-score">0</p>
+      </div>
+      <div class="score">
+        <h2 class="player">Computer</h2>
+        <p id="cpu-score">0</p>
+      </div>
+    </div>
+    <div class="container">
+      <button class="choice" id="rock">Rock</button>
+      <button class="choice" id="paper">Paper</button>
+      <button class="choice" id="scissors">Scissors</button>
+    </div>
+    <div id="message"></div>
   </body>
 </html>

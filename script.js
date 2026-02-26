@@ -18,10 +18,6 @@ function getComputerChoice() {
   }
 }
 
-function getHumanChoice() {
-  return prompt("Do you choose rock, paper, or scissors?");
-}
-
 function checkWin(humanChoice, computerChoice) {
   return (
     (humanChoice === "rock" && computerChoice === "scissors") ||
@@ -40,40 +36,42 @@ function checkLoss(humanChoice, computerChoice) {
 
 function playRound(humanChoice, computerChoice) {
   humanChoice = humanChoice.toLowerCase();
+  const message = document.querySelector("#message");
   if (checkWin(humanChoice, computerChoice)) {
-    console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+    message.innerText = `You win! ${humanChoice} beats ${computerChoice}`;
     return "W";
   } else if (checkLoss(humanChoice, computerChoice)) {
-    console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+    message.innerText = `You lose! ${computerChoice} beats ${humanChoice}`;
     return "L";
   } else if (humanChoice === computerChoice) {
-    console.log(`A tie! You both chose ${humanChoice}`);
+    message.innerText = `A tie! You both chose ${humanChoice}`;
     return "T";
   } else {
-    console.log(
-      `What are you trying to pull? ${humanChoice} isn't a valid choice.`,
-    );
+    message.innerText = `What are you trying to pull? ${humanChoice} isn't a valid choice.`;
     return "L";
   }
 }
 
-let humanScore = 0;
-let computerScore = 0;
+function incrementScore(elem) {
+  let score = Number(elem.textContent);
+  elem.textContent = ++score;
+}
+
+let humanScore = document.querySelector("#human-score");
+let computerScore = document.querySelector("#cpu-score");
 let result;
 
 const buttons = document.querySelectorAll(".choice");
 for (const button of buttons) {
   button.addEventListener("click", (event) => {
     const humanChoice = button.id;
-    console.log(`Choice is ${humanChoice}`);
     const computerChoice = getComputerChoice();
     result = playRound(humanChoice, computerChoice);
 
     if (result === "W") {
-      humanScore++;
+      incrementScore(humanScore);
     } else if (result === "L") {
-      computerScore++;
+      incrementScore(computerScore);
     }
-    console.log(`Human: ${humanScore} - Computer: ${computerScore}`);
   });
 }

@@ -57,21 +57,54 @@ function incrementScore(elem) {
   elem.textContent = ++score;
 }
 
-let humanScore = document.querySelector("#human-score");
-let computerScore = document.querySelector("#cpu-score");
-let result;
+function checkForWin(elem, winScore) {
+  let score = Number(elem.textContent);
+  return score >= winScore;
+}
 
-const buttons = document.querySelectorAll(".choice");
-for (const button of buttons) {
-  button.addEventListener("click", (event) => {
-    const humanChoice = button.id;
-    const computerChoice = getComputerChoice();
-    result = playRound(humanChoice, computerChoice);
+function resetScore() {
+  let humanScore = document.querySelector("#human-score");
+  let computerScore = document.querySelector("#cpu-score");
+  humanScore.textContent = 0;
+  computerScore.textContent = 0;
+}
 
-    if (result === "W") {
-      incrementScore(humanScore);
-    } else if (result === "L") {
-      incrementScore(computerScore);
-    }
+function resetGame() {
+  document.body.addEventListener("click", resetScore, {
+    once: true,
+    capture: true,
   });
 }
+
+function runGame(winScore = 5) {
+  let humanScore = document.querySelector("#human-score");
+  let computerScore = document.querySelector("#cpu-score");
+  let result;
+
+  const buttons = document.querySelectorAll(".choice");
+  for (const button of buttons) {
+    button.addEventListener("click", (event) => {
+      const humanChoice = button.id;
+      const computerChoice = getComputerChoice();
+      result = playRound(humanChoice, computerChoice);
+
+      if (result === "W") {
+        incrementScore(humanScore);
+      } else if (result === "L") {
+        incrementScore(computerScore);
+      }
+
+      if (checkForWin(humanScore, winScore)) {
+        const message = document.querySelector("#message");
+        message.innerText = "Congrats! You are the superior player.";
+        resetGame();
+      } else if (checkForWin(computerScore, winScore)) {
+        const message = document.querySelector("#message");
+        message.innerText = "Too Bad! Try again";
+        resetGame();
+      }
+    });
+  }
+}
+
+runGame();
